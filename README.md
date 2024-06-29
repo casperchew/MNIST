@@ -1,0 +1,7 @@
+# Stonks
+
+## Setup
+
+Command prompt
+```
+```
