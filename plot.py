@@ -1,24 +1,25 @@
+import sys
 import json
-import time
-from pprint import pprint
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-print = pprint
+if len(sys.argv) < 2:
+    exit()
 
-res = json.load(open('NVDA.json'))
-data = {}
+symbol = sys.argv[1]
 
-for i in res['Time Series (Daily)'].keys():
-    epoch = time.mktime(time.strptime(i, '%Y-%m-%d'))
-    data[epoch] = res['Time Series (Daily)'][i]
+data = pd.read_csv(f'data/csv_data/{symbol}.csv', index_col=0)
 
-json.dump(data, open('data.json', 'w'))
-data = pd.DataFrame(data).T.astype(float)
-data.columns = ['Open', 'High', 'Low', 'Close', 'Volume']
-data.loc[data.index < 1717948800, 'Close'] = data.loc[data.index < 1717948800]['Close'] / 10
-data.to_csv('NVDA.csv')
+if symbol.upper() == 'NVDA':
+    stock_split = data.index.get_loc('2024-06-06')
 
-plt.plot(data.index, data['Close'])
+data.index = np.linspace(1, data.shape[0], num=data.shape[0])
+
+if symbol.upper() == 'NVDA':
+    data.loc[stock_split:, 'Close'] = data.loc[stock_split:, 'Close'] / 10
+
+plt.grid()
+plt.plot(data.index, data['Close'][::-1], '.-k')
+plt.ylim(bottom=0)
 plt.show()

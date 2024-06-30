@@ -1,5 +1,3 @@
-import scipy
-
 import numpy as np
 
 np.random.seed(0)
@@ -14,9 +12,6 @@ def sigmoid(x):
 def sigmoidPrime(x):
 	return sigmoid(x) * (1 - sigmoid(x))
 
-def softmax(x):
-	return scipy.special.softmax(x, axis=1)
-
 class ANN:
 	def __init__(self, i, h, o, lr=1e-3):
 		self.W_ih = np.random.randn(i, h) / 784
@@ -28,7 +23,7 @@ class ANN:
 	
 	def __call__(self, X):
 		return sigmoid(X @ self.W_ih + self.B_ih) @ self.W_ho + self.B_ho
-		# return softmax(S(X @ self.W_ih + self.B_ih) @ self.W_ho + self.B_ho)
+		# return softmax(sigmoid(X @ self.W_ih + self.B_ih) @ self.W_ho + self.B_ho)
 	
 	def train(self, X, Y):
 		H = sigmoid(X @ self.W_ih + self.B_ih)
