@@ -4,4 +4,6 @@ __pycache__/
 venv
 
 ANN/MNIST
+data/csv_data/*
+data/raw_data/*
 test.py
