@@ -1,39 +1,76 @@
 import numpy as np
 
 np.random.seed(0)
-np.seterr(all='raise')
 
-def acc(model, X, y):
-	return np.sum(np.argmax(model(X), axis=1) == np.argmax(y, axis=1)) / X.shape[0] * 100
+LR = 1e-3
 
 def sigmoid(x):
 	return 1 / (1 + np.exp(-x))
 
-def sigmoidPrime(x):
+def sigmoid_prime(x):
 	return sigmoid(x) * (1 - sigmoid(x))
 
-class ANN:
-	def __init__(self, i, h, o, lr=1e-3):
-		self.W_ih = np.random.randn(i, h) / 784
-		self.B_ih = np.linspace(-1 / 784, 1 / 784, h)
-		self.W_ho = np.random.randn(h, o) / 784
-		self.B_ho = np.linspace(-1 / 784, 1 / 784, o)
+# layers
+class LinearLayer:
+	def __init__(self, input_size, output_size):
+		self.weights = np.random.rand(input_size, output_size) - 0.5
+		self.biases = np.random.rand(output_size) - 0.5
+	
+	def __call__(self, X):
+		self.X = X
+		return X @ self.weights + self.biases
+	
+	def train(self, error):
+		self.weights -= LR * (self.X.T @ error)
+		return error @ self.weights.T
 
+# activation functions
+class SigmoidLayer:
+	def __init__(self):
+		return
+	
+	def __call__(self, X):
+		self.X = X
+		return sigmoid(X)
+	
+	def train(self, error):
+		return error * sigmoid_prime(self.X)
+
+# other layers
+class SoftmaxLayer:
+	def __init__(self):
+		return
+	
+	def __call__(self, X):
+		# TODO
+		# X = np.exp(X)
+		# sum_exps = np.sum(X, axis=1)
+		return X
+	
+	def train(self, error):
+		return error
+
+class ANN:
+	def __init__(self, layers, lr=1e-3):
+		self.layers = layers
 		self.lr = lr
 	
 	def __call__(self, X):
-		return sigmoid(X @ self.W_ih + self.B_ih) @ self.W_ho + self.B_ho
-		# return softmax(sigmoid(X @ self.W_ih + self.B_ih) @ self.W_ho + self.B_ho)
+		for layer in self.layers:
+			X = layer(X)
+
+		return X
 	
 	def train(self, X, Y):
-		H = sigmoid(X @ self.W_ih + self.B_ih)
 		YHat = self(X)
+		error = YHat - Y
+		for layer in self.layers[::-1]:
+			error = layer.train(error)
 
-		self.W_ih -= self.lr * X.T @ (-2 * (Y - YHat) * sigmoidPrime(H @ self.W_ho + self.B_ho) @ self.W_ho.T * sigmoidPrime(X @ self.W_ih + self.B_ih)) / X.shape[0]
-		self.W_ho -= self.lr * H.T @ (-2 * (Y - YHat) * sigmoidPrime(H @ self.W_ho + self.B_ho)) / X.shape[0]
+		return error
 	
 	def save(self, filename):
-		np.save(f'{filename}.npy', np.array([self.W_ih, self.B_ih, self.W_ho, self.B_ho], dtype=object))
+		return
 	
 	def load(self, filename):
-		self.W_ih, self.B_ih, self.W_ho, self.B_ho = list(np.load(f'{filename}.npy', allow_pickle=True))
+		return
