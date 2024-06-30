@@ -1,4 +1,6 @@
+__pycache__/
+
 .env
-ANN/__pycache__/
-ANN/MNIST
 venv
+
+ANN/MNIST
