@@ -14,7 +14,7 @@ if len(sys.argv) < 2:
 
 symbol = sys.argv[1]
 
-url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={os.environ["API_KEY"]}'
+url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&outputsize=full&apikey={os.environ["API_KEY"]}'
 
 r = requests.get(url)
 
