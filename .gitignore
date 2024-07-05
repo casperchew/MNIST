@@ -3,10 +3,7 @@ __pycache__/
 .env
 venv
 
-ANN/MNIST
-data/csv_data/*
-data/raw_data/*
+MNIST/*
 models/*
-*.png
 ai.py
 test.py
