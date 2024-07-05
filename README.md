@@ -1,13 +1,6 @@
-# Stonks
+# MNIST
 
 ## Setup
-
-Environment variables
-
-Create .env file
-```
-API_KEY={string}
-```
 
 Installing requirements
 ```
@@ -16,6 +9,4 @@ Installing requirements
 
 ## Usage
 ```
-\stonks>py api.py {symbol}
-\stonks>py plot.py {symbol}
 ```
