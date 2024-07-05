@@ -6,4 +6,3 @@ venv
 MNIST/*
 models/*
 ai.py
-test.py

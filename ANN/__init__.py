@@ -59,7 +59,7 @@ class SigmoidLayer:
 		return 1 / (1 + np.exp(-x))
 
 	def sigmoid_prime(x):
-		return sigmoid(x) * (1 - sigmoid(x))
+		return SigmoidLayer.sigmoid(x) * (1 - SigmoidLayer.sigmoid(x))
 
 	def __init__(self):
 		return
@@ -118,8 +118,9 @@ class ANN:
 
 		return X
 	
-	def train(self, X, Y, batch_size=-1, lr=1e-2):
-		# TODO batch_size
+	def train(self, X, Y, batch_size=-1, lr=1e-4):
+		# TODO: batch_size
+		# TODO: self finding lr
 		YHat = self(X)
 		error = YHat - Y
 		for layer in self.layers[::-1]:
