@@ -22,35 +22,35 @@ class LinearLayer:
 		self.biases -= lr * np.average(error, 0)
 		return error @ self.weights.T
 
-class Convolution2DLayer:
-	# TODO
-	def __init__(self, input_resolution, kernals):
-		self.input_resolution = input_resolution
-		self.kernals = kernals
-		return
+# class Convolution2DLayer:
+# 	# TODO
+# 	def __init__(self, input_resolution, kernals):
+# 		self.input_resolution = input_resolution
+# 		self.kernals = kernals
+# 		return
 	
-	def __call__(self, X):
-		def convolve(x):
-			x = x.reshape(self.input_resolution)
-			y = []
-			for kernal in self.kernals:
-				output = np.empty([
-					self.input_resolution[0] - kernal.shape[0] + 1,
-					self.input_resolution[1] - kernal.shape[1] + 1
-				])
-				for i in range(output.shape[0]):
-					for j in range(output.shape[1]):
-						input_matrix = x[i: i + kernal.shape[0], j: j + kernal.shape[1]]
-						output[i][j] = np.sum(input_matrix * kernal)
+# 	def __call__(self, X):
+# 		def convolve(x):
+# 			x = x.reshape(self.input_resolution)
+# 			y = []
+# 			for kernal in self.kernals:
+# 				output = np.empty([
+# 					self.input_resolution[0] - kernal.shape[0] + 1,
+# 					self.input_resolution[1] - kernal.shape[1] + 1
+# 				])
+# 				for i in range(output.shape[0]):
+# 					for j in range(output.shape[1]):
+# 						input_matrix = x[i: i + kernal.shape[0], j: j + kernal.shape[1]]
+# 						output[i][j] = np.sum(input_matrix * kernal)
 				
-				y += list(output.reshape(-1))
+# 				y += list(output.reshape(-1))
 			
-			return y
+# 			return y
 		
-		return np.apply_along_axis(convolve, 1, X)
+# 		return np.apply_along_axis(convolve, 1, X)
 	
-	def train(self, error, *args):
-		return error
+# 	def train(self, error, *args):
+# 		return error
 
 # activation functions
 class SigmoidLayer:

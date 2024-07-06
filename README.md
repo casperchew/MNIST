@@ -2,11 +2,27 @@
 
 ## Setup
 
-Installing requirements
+### Installing requirements
 ```
-\stonks>pip install -r requirements.txt
+\MNIST>pip install -r requirements.txt
 ```
 
+### MNIST dataset
+- Create a folder `MNIST`
+- Move 4 dataset files into `\MNIST`:
+    - `train-images-idx3-ubyte.gz`
+    - `train-labels-idx1-ubyte.gz`
+    - `t10k-images-idx3-ubyte.gz`
+    - `t10k-labels-idx1-ubyte.gz`
+- Run `idx_to_npy.py` to convert dataset into numpy arrays
+
 ## Usage
+
+1) Create a neural network model using `model.py`
+2) Set config in `config.yaml`
 ```
+model: {string}
+epochs: {int}
+batch_size: {int}
 ```
+3) Test using `test.py` or train using `train.py`
