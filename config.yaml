@@ -1,0 +1,3 @@
+model: 784-300-10
+epochs: 1
+batch_size: 1

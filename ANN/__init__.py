@@ -3,9 +3,8 @@ import numpy as np
 
 from scipy.special import softmax
 
-import ANN.kernals
-
 np.random.seed(0)
+np.seterr(all='ignore')
 
 # layers
 class LinearLayer:
