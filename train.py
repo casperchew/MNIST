@@ -22,23 +22,15 @@ train_acc = np.sum(np.argmax(model(X_train), 1) == np.argmax(Y_train, 1)) / 600
 test_acc = np.sum(np.argmax(model(X_test), 1).reshape(10000, 1) == Y_test) / 100
 
 if config['batch_size'] == -1:
-    pbar = trange(config['epochs'])
-    pbar.set_description(f'{train_acc}, {test_acc}')
-    for _ in pbar:
+    for _ in trange(config['epochs']):
         model.train(X_train, Y_train, lr=1e-4)
-
-    train_acc = np.sum(np.argmax(model(X_train), 1) == np.argmax(Y_train, 1)) / 600
-    test_acc = np.sum(np.argmax(model(X_test), 1).reshape(10000, 1) == Y_test) / 100
-    pbar.set_description(f'{train_acc}, {test_acc}')
     
 elif config['batch_size'] == 1:
-    pbar = trange(config['epochs'] * 60000)
-    pbar.set_description(f'{train_acc}, {test_acc}')
-    for i in pbar:
+    for i in trange(config['epochs'] * 60000):
         model.train(X_train[i].reshape(1, 784), Y_train[i].reshape(1, 10), lr=1e-2)
 
-    train_acc = np.sum(np.argmax(model(X_train), 1) == np.argmax(Y_train, 1)) / 600
-    test_acc = np.sum(np.argmax(model(X_test), 1).reshape(10000, 1) == Y_test) / 100
-    pbar.set_description(f'{train_acc}, {test_acc}')
+train_acc = np.sum(np.argmax(model(X_train), 1) == np.argmax(Y_train, 1)) / 600
+test_acc = np.sum(np.argmax(model(X_test), 1).reshape(10000, 1) == Y_test) / 100
+print(train_acc, test_acc)
 
 model.save(config['model'])
