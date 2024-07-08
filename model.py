@@ -1,11 +1,13 @@
+import yaml
+
 import NN
 
+config = yaml.safe_load(open('config.yaml'))
+
 model = NN.NN([
-    NN.LinearLayer(784, 300),
-    NN.SigmoidLayer(),
-    NN.LinearLayer(300, 10),
+    NN.LinearLayer(784, 10),
     NN.SigmoidLayer(),
     NN.SoftmaxLayer()
 ])
 
-model.save('784-300-10')
+model.save(config['model'])
