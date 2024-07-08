@@ -1,11 +1,11 @@
-import ANN
+import NN
 
-model = ANN.ANN([
-    ANN.LinearLayer(784, 300),
-    ANN.SigmoidLayer(),
-    ANN.LinearLayer(300, 10),
-    ANN.SigmoidLayer(),
-    ANN.SoftmaxLayer()
+model = NN.NN([
+    NN.LinearLayer(784, 300),
+    NN.SigmoidLayer(),
+    NN.LinearLayer(300, 10),
+    NN.SigmoidLayer(),
+    NN.SoftmaxLayer()
 ])
 
 model.save('784-300-10')

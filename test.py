@@ -2,11 +2,11 @@ import yaml
 
 import numpy as np
 
-import ANN
+import NN
 
 config = yaml.safe_load(open('config.yaml'))
 
-model = ANN.ANN([])
+model = NN.NN([])
 model.load(config['model'])
 
 X_train = np.load('MNIST/train_images.npy').reshape(60000, 784)

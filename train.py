@@ -4,10 +4,10 @@ import numpy as np
 
 from tqdm import trange
 
-import ANN
+import NN
 
 config = yaml.safe_load(open('config.yaml'))
-model = ANN.ANN([])
+model = NN.NN([])
 model.load(config['model'])
 
 X_train = np.load('MNIST/train_images.npy').reshape(60000, 784)
@@ -29,4 +29,10 @@ train_acc = np.sum(np.argmax(model(X_train), 1) == np.argmax(Y_train, 1)) / 600
 test_acc = np.sum(np.argmax(model(X_test), 1).reshape(10000, 1) == Y_test) / 100
 print(train_acc, test_acc)
 
-model.save(config['model'])
+while True:
+    save = input('Save? (Y/N)')
+    if save.upper() == 'Y':
+        model.save(config['model'])
+        break
+    elif save.upper() == 'N':
+        break

@@ -15,7 +15,6 @@ class LinearLayer:
 	def __call__(self, X):
 		self.X = X
 		return X @ self.weights + self.biases
-		return X @ self.weights
 	
 	def train(self, error, *args):
 		self.weights -= self.X.T @ error
@@ -107,7 +106,7 @@ class SoftmaxLayer:
 	def train(self, error, *args):
 		return error
 
-class ANN:
+class NN:
 	def __init__(self, layers):
 		self.layers = layers
 		self.previous_error = 0
@@ -142,7 +141,8 @@ class ANN:
 		np.save(f'models/{model_name}/layers', [layer.__class__.__name__ for layer in self.layers])
 		for i, layer in enumerate(self.layers):
 			try:
-				np.save(f'models/{model_name}/{i}', layer.weights)
+				np.save(f'models/{model_name}/{i}_weights', layer.weights)
+				np.save(f'models/{model_name}/{i}_biases', layer.biases)
 			except Exception as e:
 				pass
 	
@@ -151,6 +151,7 @@ class ANN:
 			try:
 				self.layers.append(globals()[layer]())
 			except Exception as e:
-				layer = globals()[layer](*np.load(f'models/{model_name}/{i}.npy').shape)
-				layer.weights = np.load(f'models/{model_name}/{i}.npy')
+				layer = globals()[layer](*np.load(f'models/{model_name}/{i}_weights.npy').shape)
+				layer.weights = np.load(f'models/{model_name}/{i}_weights.npy')
+				layer.biases = np.load(f'models/{model_name}/{i}_biases.npy')
 				self.layers.append(layer)
