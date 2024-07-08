@@ -40,5 +40,7 @@ batch_size: {int}
 
 ## Models
 
-### K-NN Euclidean
-Error rate: 3.1%
+### K-NN
+`k=1`:
+- Error rate: 3.1%
+- Recognition time on test dataset: 1h 1min 9.5s
