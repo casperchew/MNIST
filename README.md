@@ -49,3 +49,9 @@ batch_size: {int}
 - Error rate: 24.31%
 - Training config: 30 epochs, batch_size=1, lr=1e-3
 - Training time: 2min 51s
+
+### Neural Networks
+28*28-300-10:
+- Error rate: 7.49%
+- Training config: 30 epochs, batch_size=1, lr=1e-3
+- Training time: 17min 49s
