@@ -17,9 +17,9 @@ class LinearLayer:
 		return X @ self.weights + self.biases
 		return X @ self.weights
 	
-	def train(self, error, lr):
-		self.weights -= lr * (self.X.T @ error)
-		self.biases -= lr * np.average(error, 0)
+	def train(self, error, *args):
+		self.weights -= self.X.T @ error
+		self.biases -= np.average(error, 0)
 		return error @ self.weights.T
 
 # class Convolution2DLayer:
@@ -110,6 +110,7 @@ class SoftmaxLayer:
 class ANN:
 	def __init__(self, layers):
 		self.layers = layers
+		self.previous_error = 0
 	
 	def __call__(self, X):
 		for layer in self.layers:
@@ -117,15 +118,16 @@ class ANN:
 
 		return X
 	
-	def train(self, X, Y, batch_size=-1, lr=1e-4):
+	def train(self, X, Y, batch_size=-1, lr=1e-4, momentum_constant=0.1):
 		# TODO: batch_size
-		# TODO: self finding lr
-		YHat = self(X)
-		error = YHat - Y
-		for layer in self.layers[::-1]:
-			error = layer.train(error, lr)
 
-		return error
+		YHat = self(X)
+		momentum_lr = (1 - momentum_constant) * lr
+		error = momentum_constant * self.previous_error + momentum_lr * (YHat - Y)
+		self.previous_error = error
+
+		for layer in self.layers[::-1]:
+			error = layer.train(error, 1)
 	
 	def save(self, model_name):
 		try:
