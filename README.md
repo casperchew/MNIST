@@ -10,10 +10,10 @@
 ### MNIST dataset
 - Create a folder `MNIST`
 - Move 4 dataset files into `\MNIST`:
-    - `train-images-idx3-ubyte.gz`
-    - `train-labels-idx1-ubyte.gz`
-    - `t10k-images-idx3-ubyte.gz`
-    - `t10k-labels-idx1-ubyte.gz`
+	- `train-images-idx3-ubyte.gz`
+	- `train-labels-idx1-ubyte.gz`
+	- `t10k-images-idx3-ubyte.gz`
+	- `t10k-labels-idx1-ubyte.gz`
 - Run `idx_to_npy.py` to convert dataset into numpy arrays
 
 ## Usage
@@ -37,3 +37,8 @@ batch_size: {int}
 \>py test.py
 \>py train.py
 ```
+
+## Models
+
+### K-NN Euclidean
+Error rate: 3.1%
