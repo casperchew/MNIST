@@ -18,11 +18,15 @@
 
 ## Usage
 
-1) Create a neural network model using `model.py`
-2) Set config in `config.yaml`
+1) Create `models` directory
+```
+\>mkdir models
+```
+2) Create a neural network model using `model.py`
+3) Set config in `config.yaml`
 ```
 model: {string}
 epochs: {int}
 batch_size: {int}
 ```
-3) Test using `test.py` or train using `train.py`
+4) Test using `test.py` or train using `train.py`
