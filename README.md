@@ -44,3 +44,8 @@ batch_size: {int}
 `k=1`:
 - Error rate: 3.1%
 - Recognition time on test dataset: 1h 1min 9.5s
+
+### Linear
+- Error rate: 24.31%
+- Training config: 30 epochs, batch_size=1, lr=1e-3
+- Training time: 2min 51s
