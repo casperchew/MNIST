@@ -22,15 +22,15 @@
 ```
 \>mkdir models
 ```
-2) Create a neural network model using `model.py`
-```
-\>py model.py
-```
-3) Set config in `config.yaml`
+2) Set config in `config.yaml`
 ```
 model: {string}
 epochs: {int}
 batch_size: {int}
+```
+3) Create a neural network model using `model.py`
+```
+\>py model.py
 ```
 4) Test using `test.py` or train using `train.py`
 ```
