@@ -42,8 +42,7 @@ batch_size: {int}
 
 ### K-NN
 `k=1`:
-- Error rate: 3.1%
-- Recognition time on test dataset: 1h 1min 9.5s
+- Error rate: 3.09%
 
 ### Linear
 - Architecture: LinearLayer(784, 10), SigmoidLayer, SoftmaxLayer
