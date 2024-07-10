@@ -7,7 +7,14 @@ np.random.seed(0)
 np.seterr(all='ignore')
 
 # layers
-class LinearLayer:
+class Layer:
+	def __init__(self):
+		return
+	
+	def __str__(self):
+		return self.__class__.__name__
+
+class LinearLayer(Layer):
 	def __init__(self, input_size, output_size):
 		self.weights = np.random.rand(input_size, output_size) - 0.5
 		self.biases = np.random.rand(output_size) - 0.5
@@ -15,6 +22,9 @@ class LinearLayer:
 	def __call__(self, X):
 		self.X = X
 		return X @ self.weights + self.biases
+
+	def __str__(self):
+		return f'{self.__class__.__name__}{self.weights.shape}'
 	
 	def train(self, error, *args):
 		self.weights -= self.X.T @ error
@@ -52,7 +62,7 @@ class LinearLayer:
 # 		return error
 
 # activation functions
-class SigmoidLayer:
+class SigmoidLayer(Layer):
 	def sigmoid(x):
 		return 1 / (1 + np.exp(-x))
 
@@ -69,7 +79,7 @@ class SigmoidLayer:
 	def train(self, error, *args):
 		return error * SigmoidLayer.sigmoid_prime(self.X)
 
-class ReLULayer:
+class ReLULayer(Layer):
 	ReLU = np.vectorize(lambda x: x if x > 0 else 0)
 	ReLU_prime = np.vectorize(lambda x: 1 if x >= 0 else 0)
 
@@ -83,7 +93,7 @@ class ReLULayer:
 	def train(self, error, *args):
 		return error * ReLULayer.ReLU_prime(self.X)
 
-class LeakyReLULayer:
+class LeakyReLULayer(Layer):
 	def __init__(self, leak=1e-2):
 		self.LeakyReLU = np.vectorize(lambda x: x if x > 0 else leak * x)
 		self.LeakyReLU_prime = np.vectorize(lambda x: 1 if x >= 0 else leak)
@@ -96,7 +106,7 @@ class LeakyReLULayer:
 		return error * self.LeakyReLU_prime(self.X)
 
 # other layers
-class SoftmaxLayer:
+class SoftmaxLayer(Layer):
 	def __init__(self):
 		return
 	
@@ -116,6 +126,9 @@ class NN:
 			X = layer(X)
 
 		return X
+
+	def __repr__(self):
+		return ', '.join(map(str, self.layers))
 	
 	def train(self, X, Y, batch_size=-1, lr=1e-4, momentum_constant=0.1):
 		# TODO: batch_size
