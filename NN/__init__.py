@@ -31,6 +31,28 @@ class LinearLayer(Layer):
 		self.biases -= np.average(error, 0)
 		return error @ self.weights.T
 
+class RecurrentLayer(Layer):
+	def __init__(self, input_size, output_size, hidden_size):
+		self.weights = np.random.rand(hidden_size, output_size) - 0.5
+		self.biases = np.random.rand(output_size) - 0.5
+
+		# hidden state
+		self.hidden_state = np.zeros(hidden_size).reshape(1, hidden_size)
+		self.input_weights = np.random.rand(input_size, hidden_size) - 0.5
+		self.hidden_weights = np.random.rand(hidden_size, hidden_size) - 0.5
+		self.hidden_biases = np.random.rand(hidden_size).reshape(1, hidden_size) - 0.5
+	
+	def __call__(self, X):
+		self.X = X
+		self.hidden_state = X @ self.input_weights + self.hidden_state @ self.hidden_weights + self.hidden_biases
+		return self.hidden_state @ self.weights + self.biases
+	
+	def train(self, error, *args):
+		self.input_weights -= self.X.T @ error @ self.weights.T
+		self.hidden_weights -= self.hidden_state.T @ error @ self.weights.T
+		self.weights -= self.hidden_state.T @ error
+		return error @ self.weights.T @ self.input_weights.T
+
 # class Convolution2DLayer:
 # 	# TODO
 # 	def __init__(self, input_resolution, kernals):
